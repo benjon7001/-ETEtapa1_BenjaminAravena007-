@@ -3,39 +3,39 @@ from .forms import ColaboradoresForm
 from .models import Colaboradores
 # Create your views here.
 
-def formulario(request):
+def form(request):
     return render(request, 'formulario.html')
-def actualizar(request):
+def actl(request):
     return render (request, 'god/actualizar.html')
 
 def form_colaboradores(request):
     if request.method =='POST':
-        colab=ColaboradoresForm(request.POST)
-        if colab.is_valid():
-            colab.save()
+        col=ColaboradoresForm(request.POST)
+        if col.is_valid():
+            col.save()
             return redirect('formulario')
     else:
-        colab=ColaboradoresForm()
-    return render(request, 'god/formulario.html', {'colab': colab})
+        col=ColaboradoresForm()
+    return render(request, 'god/formulario.html', {'col': col})
 
 def VerColaboradores(request):
-    colabb = Colaboradores.objects.all()
-    return render(request, 'god/mostrar.html', context={'colabb':colabb})
+    coll = Colaboradores.objects.all()
+    return render(request, 'god/mostrar.html', context={'coll':coll})
 
 def modColaborador(request,id):
-    mod = Colaboradores.objects.get(rut=id)
+    modcol = Colaboradores.objects.get(rut=id)
 
     datos ={
-           'form': ColaboradoresForm(instance=mod)
+           'form': ColaboradoresForm(instance=modcol)
     }
     if request.method == 'POST': 
-        modd = ColaboradoresForm(data=request.POST, instance = mod)
-        if modd.is_valid: 
-            modd.save()          
+        moddcol = ColaboradoresForm(data=request.POST, instance = modcol)
+        if moddcol.is_valid: 
+            moddcol.save()          
             return redirect('mostrar') 
     return render(request, 'god/actualizar.html', datos)
 
-def delColaborador(request,id):
-    dele = Colaboradores.objects.get(rut=id)
-    dele.delete()
+def dlColaborador(request,id):
+    dl = Colaboradores.objects.get(rut=id)
+    dl.delete()
     return redirect('mostrar')
